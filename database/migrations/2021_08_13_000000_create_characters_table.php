@@ -15,10 +15,10 @@ class CreateCharactersTable extends Migration
     {
         Schema::create('characters', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->index('name');
-            $table->enum('status', ['alive', 'dead'])->index('status');
-            $table->enum('gender', ['male', 'female'])->index('gender');
-            $table->enum('race', ['human', 'alien', 'robot', 'humanoid', 'animal'])->index('race');
+            $table->string('name')->index();
+            $table->enum('status', ['alive', 'dead'])->index();
+            $table->enum('gender', ['male', 'female'])->index();
+            $table->enum('race', ['human', 'alien', 'robot', 'humanoid', 'animal'])->index();
             $table->text('description');
             $table->softDeletes();
             $table->timestamps();
