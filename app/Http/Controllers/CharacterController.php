@@ -3,39 +3,48 @@
 namespace App\Http\Controllers;
 
 use App\Models\Character;
-use App\Http\Requests\CharacterCreateRequest;
-use App\Http\Requests\CharacterUpdateRequest;
+use App\Services\CharacterService;
+use App\Http\Requests\CharacterRequest;
+use Illuminate\Http\Request;
 
 class CharacterController extends Controller
 {
-    public function index()
+    private $CharacterService;
+
+    public function __construct(CharacterService $CharacterService)
     {
-        $characters = Character::select('name','status','gender','race','description')->get();
-        return response()->json($characters, 200);
+        $this->CharacterService = $CharacterService;
     }
 
-    public function show($id)
+    public function index(Request $request)
     {
-        $character = Character::select('name','status','gender','race','description')->where('id', $id)->get();
-        return response()->json($character, 200);
+        $data = $this->CharacterService->index($request);
+        return response()->json($data, 200);
     }
 
-    public function store(CharacterCreateRequest $request)
+    public function get($id, Request $request)
     {
-        Character::create($request->validated());
+        $data = $this->CharacterService->get($id, $request);
+        return response()->json($data, 200);
+    }
+
+    public function store(CharacterRequest $request)
+    {
+        $request->validated();
+        $this->CharacterService->store($request);
         return ['message' => 'Персонаж сохранен'];
     }
 
-    public function update($id, CharacterUpdateRequest $request)
+    public function update($id, CharacterRequest $request)
     {
-        Character::where('id', $id)->update($request->validated());
+        $request->validated();
+        $this->CharacterService->update($id, $request);
         return ['message' => 'Персонаж сохранен'];
     }
 
     public function destroy($id)
     {
-        $character = $this->characterModel::find($id);
-        $character->delete();
+        $this->CharacterService->destroy($id);
         return ['message' => 'Персонаж удален'];
     }
 }

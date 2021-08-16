@@ -21,7 +21,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'characters'], function () {
         Route::get('/', [CharacterController::class, 'index']);
-        Route::get('/{id}', [CharacterController::class, 'show'])->where(['id' => '[0-9]+']);
+        Route::get('/{id}', [CharacterController::class, 'get'])->where(['id' => '[0-9]+']);
         Route::post('/', [CharacterController::class, 'store']);
         Route::put('/{id}', [CharacterController::class, 'update'])->where(['id' => '[0-9]+']);
         Route::delete('/{id}', [CharacterController::class, 'destroy'])->where(['id' => '[0-9]+']);
