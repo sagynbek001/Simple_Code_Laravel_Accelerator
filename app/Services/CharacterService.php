@@ -2,10 +2,7 @@
 
 namespace App\Services;
 
-use App\Http\Requests\CharacterRequest;
 use App\Repositories\CharacterRepository;
-use Illuminate\Http\Request;
-
 class CharacterService
 {
     private $repo;
@@ -15,7 +12,7 @@ class CharacterService
         $this->repo = $repo;
     }
 
-    public function index(Request $request)
+    public function index($request)
     {
         return $this->repo->index($request);
     }
@@ -25,12 +22,12 @@ class CharacterService
         return $this->repo->get($id);
     }
 
-    public function store(CharacterRequest $request)
+    public function store($request)
     {
         return $this->repo->store($request);
     }
 
-    public function update($id, CharacterRequest $request)
+    public function update($id, $request)
     {
         return $this->repo->update($id, $request);
     }
