@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Character;
-use App\Http\Requests\CharacterRequest;
+use App\Http\Resources\CharacterCollection;
 use Illuminate\Http\Request;
 
 class CharacterRepository
@@ -54,19 +54,20 @@ class CharacterRepository
         $results = Project::orderBy('name')->get();
         $sorted = $characters->sortBy($request->input("sort"));
         */
+        return Character::paginate(2);
     }
 
     public function get($id)
     {
-        return Character::select('name','status','gender','race','description')->where('id', $id)->get();
+        return Character::findOrFail($id);
     }
 
-    public function store(CharacterRequest $request)
+    public function store($request)
     {
         Character::create($request);
     }
 
-    public function update($id, CharacterRequest $request)
+    public function update($id, $request)
     {
         Character::where('id', $id)->update($request);
     }
