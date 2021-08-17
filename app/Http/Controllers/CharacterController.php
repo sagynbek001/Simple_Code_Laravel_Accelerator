@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Services\CharacterService;
+use Illuminate\Http\Request;
 use App\Http\Requests\CharacterRequest;
 use App\Http\Resources\CharacterResource;
 use App\Http\Resources\CharacterCollection;
-use Illuminate\Http\Request;
-
 class CharacterController extends Controller
 {
     private $CharacterService;
@@ -19,7 +18,7 @@ class CharacterController extends Controller
 
     public function index(Request $request)
     {
-        $data = $this->CharacterService->index($request);
+        $data = $this->CharacterService->index($request->all());
         return new CharacterCollection($data);
     }
 
