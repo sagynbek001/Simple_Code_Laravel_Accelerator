@@ -24,16 +24,19 @@ class CharacterService
 
     public function store($request)
     {
-        return $this->repo->store($request);
+        $this->repo->store($request);
+        return ['message' => 'Персонаж сохранен'];
     }
 
     public function update($id, $request)
     {
-        return $this->repo->update($id, $request);
+        $this->repo->update($id, $request);
+        return ['message' => 'Персонаж сохранен'];
     }
 
     public function destroy($id)
     {
-        return $this->repo->destroy($id);
+        $this->repo->destroy($id);
+        return ['message' => 'Персонаж удален'];
     }
 }

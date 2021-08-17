@@ -30,20 +30,20 @@ class CharacterController extends Controller
 
     public function store(CharacterRequest $request)
     {
-        $this->CharacterService->store($request->validated());
-        return ['message' => 'Персонаж сохранен'];
+        $data = $this->CharacterService->store($request->validated());
+        return $data;
     }
 
     public function update($id, CharacterRequest $request)
     {
-        $this->CharacterService->update($id, $request->validated());
-        return ['message' => 'Персонаж сохранен'];
+        $data = $this->CharacterService->update($id, $request->validated());
+        return $data;
     }
 
     public function destroy($id)
     {
-        $this->CharacterService->destroy($id);
-        return ['message' => 'Персонаж удален'];
+        $data = $this->CharacterService->destroy($id);
+        return $data;
     }
 }
 
