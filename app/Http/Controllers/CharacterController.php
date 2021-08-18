@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Services\CharacterService;
-use App\Http\Requests\CharacterIndexRequest;
+use App\Http\Requests\CharacterIndexRequest; //validation needs to be implemented
 use App\Http\Requests\CharacterRequest;
 use App\Http\Resources\CharacterCollection;
 class CharacterController extends Controller
@@ -15,9 +16,9 @@ class CharacterController extends Controller
         $this->CharacterService = new CharacterService();
     }
 
-    public function index(CharacterIndexRequest $request)
+    public function index(Request $request)
     {
-        $result = $this->CharacterService->index($request->validated());
+        $result = $this->CharacterService->index($request->all());
         return $this->resultCollection(CharacterCollection::class, $result);
     }
 

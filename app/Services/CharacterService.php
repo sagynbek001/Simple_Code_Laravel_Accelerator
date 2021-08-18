@@ -14,7 +14,7 @@ class CharacterService extends BaseService
         $this->repo = new CharacterRepository();
     }
 
-    public function index($params): ServiceResult
+    public function index(array $params): ServiceResult
     {
         return $this->result($this->repo->index($params));
     }
@@ -57,6 +57,6 @@ class CharacterService extends BaseService
             return $this->errNotFound('Персонаж не найден');
         }
         $this->repo->destroy($model);
-        return ['message' => 'Персонаж удален'];
+        return $this->ok('Персонаж удален');
     }
 }
