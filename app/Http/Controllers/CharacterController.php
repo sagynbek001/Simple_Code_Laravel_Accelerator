@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\CharacterService;
 use Illuminate\Http\Request;
+use App\Http\Requests\CharacterIndexRequest;
 use App\Http\Requests\CharacterRequest;
 use App\Http\Resources\CharacterResource;
 use App\Http\Resources\CharacterCollection;
@@ -11,15 +12,15 @@ class CharacterController extends Controller
 {
     private $CharacterService;
 
-    public function __construct(CharacterService $CharacterService)
+    public function __construct()
     {
-        $this->CharacterService = $CharacterService;
+        $this->CharacterService = new CharacterService();
     }
 
-    public function index(Request $request)
+    public function index(CharacterIndexRequest $request)
     {
-        $data = $this->CharacterService->index($request->all());
-        return new CharacterCollection($data);
+        $result = $this->CharacterService->index($request->all());
+        return $this->resultCollection(CharacterCollection::class, $result);
     }
 
     public function get($id, Request $request)
@@ -30,20 +31,17 @@ class CharacterController extends Controller
 
     public function store(CharacterRequest $request)
     {
-        $data = $this->CharacterService->store($request->validated());
-        return $data;
+        return $this->result($this->CharacterService->store($request->validated()));
     }
 
     public function update($id, CharacterRequest $request)
     {
-        $data = $this->CharacterService->update($id, $request->validated());
-        return $data;
+        return $this->result($this->CharacterService->update($id, $request->validated()));
     }
 
     public function destroy($id)
     {
-        $data = $this->CharacterService->destroy($id);
-        return $data;
+        return $this->result($this->CharacterService->destroy($id));
     }
 }
 
