@@ -6,40 +6,36 @@ use App\Models\Character;
 
 class CharacterRepository
 {
-    public function index($request)
+    public function index($params)
     {
-        //status, race, gender filter
-        //order (desc, asc)
-        //sort (attribute)
-        //поиск по имени и дескрипшну
+        if (isset($params['gender']))
+            $query = Character::whereIn('gender', $params['gender']);
 
-        if (isset($request['gender']))
-            $query = Character::whereIn('gender', $request['gender']);
+        if (isset($params['race']))
+            $query->whereIn('race', $params['race']);
 
-        if (isset($request['race']))
-            $query->whereIn('race', $request['race']);
+        if (isset($params['status']))
+            $query->whereIn('status', $params['status']);
 
-        if (isset($request['status']))
-            $query->whereIn('status', $request['status']);
-
-        if (isset($request['search'])){
-            $query
-            ->where('name',           'LIKE', '%' . $request['search']  . '%')
-            ->orWhere('description',  'LIKE', '%' . $request['search']  . '%');
+        if (isset($params['search'])){
+            $query->where(function ($subQuery) use ($params) {
+                $subQuery->where('name', 'LIKE', '%' . $params['search'] . '%')
+                    ->orWhere('description', 'LIKE', '%' . $params['search'] . '%');
+            });
         }
 
-        if (isset($request['sort'])){
-            if (isset($request['order'])){
-                $query->orderBy($request['sort'], $request['order']);
+        if (isset($params['sort'])){
+            if (isset($params['order'])){
+                $query->orderBy($params['sort'], $params['order']);
             } else {
-                $query->orderBy($request['sort'], 'asc');
+                $query->orderBy($params['sort'], 'asc');
             }
         }
 
-        if (isset($request['per_page'])) {
-            return $query->paginate($request['per_page']);
+        if (isset($params['per_page'])) {
+            return $query->paginate($params['per_page']);
         } else {
-            return $query->paginate(3);
+            return $query->paginate(10);
         }
     }
 
@@ -63,8 +59,15 @@ class CharacterRepository
         return $model->delete();
     }
 
-    public function existsName($name, $id): bool
+    public function existsName($name, $id)
     {
-        return 45;
+        if (Character::where('name', '=', $name)->exists()) {
+            $character = Character::where('name', '=', $name);
+            if ($character->id != $id){
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 }

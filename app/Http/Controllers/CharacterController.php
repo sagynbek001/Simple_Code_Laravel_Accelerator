@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\CharacterService;
-use Illuminate\Http\Request;
 use App\Http\Requests\CharacterIndexRequest;
 use App\Http\Requests\CharacterRequest;
-use App\Http\Resources\CharacterResource;
 use App\Http\Resources\CharacterCollection;
 class CharacterController extends Controller
 {
@@ -19,14 +17,13 @@ class CharacterController extends Controller
 
     public function index(CharacterIndexRequest $request)
     {
-        $result = $this->CharacterService->index($request->all());
+        $result = $this->CharacterService->index($request->validated());
         return $this->resultCollection(CharacterCollection::class, $result);
     }
 
-    public function get($id, Request $request)
+    public function get($id)
     {
-        $data = $this->CharacterService->get($id, $request);
-        return new CharacterResource($data);
+        return $this->result($this->CharacterService->get($id));
     }
 
     public function store(CharacterRequest $request)
