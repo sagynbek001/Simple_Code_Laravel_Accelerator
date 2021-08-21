@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\v1;
 
 use App\Services\v1\ServiceResult;
 use App\Services\v1\BaseService;

@@ -20,10 +20,7 @@ class CharacterResource extends JsonResource
             'gender' => $this->gender,
             'race' => $this->race,
             'description' => $this->description,
-            'image' => [
-                'id' => $this->image_id,
-                'url' => $this->image_url,
-            ]
+            'image' => new ImageResource($this->image)
         ];
     }
 }
