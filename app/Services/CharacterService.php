@@ -27,7 +27,7 @@ class CharacterService extends BaseService
         }
         $ImageService = new ImageService();
         $path = $ImageService->get($model->image_id)->__get('data');
-        $model['image_url'] = "https://rick-and-morty-backend.develop/storage/" . $path['path'];
+        $model['image_url'] = url("/storage/{$path['path']}");
         return $this->result($model);
     }
 

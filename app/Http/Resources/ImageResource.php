@@ -16,7 +16,7 @@ class ImageResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'url' => "https://rick-and-morty-backend.develop/storage/" . $this->path,
+            'url' => url("/storage/{$this->path}"),
         ];
     }
 }
