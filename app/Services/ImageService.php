@@ -18,28 +18,28 @@ class ImageService extends BaseService
 
     public function get($id): ServiceResult
     {
-        $model = $this->repo->get($id);
-        if (is_null($model)) {
+        $image = $this->repo->get($id);
+        if (is_null($image)) {
             return $this->errNotFound('Картинка не найденa');
         }
-        return $this->result($model);
+        return $this->result($image);
     }
 
-    public function store($request) //: ServiceResult
+    public function store($request): ServiceResult
     {
         $path = $request->file('file')->storePublicly('images', 'public');
-        $model = $this->repo->store(['path'=>$path]);
-        return $model;
+        $image = $this->repo->store(['path'=>$path]);
+        return $this->result($image);
     }
 
     public function destroy($id): ServiceResult
     {
-        $model = $this->repo->get($id);
-        if (is_null($model)) {
+        $image = $this->repo->get($id);
+        if (is_null($image)) {
             return $this->errNotFound('Картинка не найдена');
         }
-        Storage::delete(str_replace("images/", "", $model->path));
-        $this->repo->destroy($model);
+        Storage::delete(str_replace("images/", "", $image->path));
+        $this->repo->destroy($image);
         return $this->ok('Картинка удалена');
     }
 }
