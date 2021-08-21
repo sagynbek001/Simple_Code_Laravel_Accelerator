@@ -20,7 +20,7 @@ class CharacterTest extends TestCase
     {
         $response = $this->postJson('/api/v1/characters', []);
         $response->assertStatus(422)->assertJsonStructure([
-            'message', 'errors' => ['name', 'status', 'gender', 'race', 'description']
+            'message', 'errors' => ['name', 'status', 'gender', 'race', 'description', 'image_id']
         ]);
     }
 

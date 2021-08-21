@@ -7,6 +7,8 @@ use App\Services\CharacterService;
 use App\Http\Requests\CharacterIndexRequest; //validation needs to be implemented
 use App\Http\Requests\CharacterRequest;
 use App\Http\Resources\CharacterCollection;
+use App\Http\Resources\CharacterResource;
+
 class CharacterController extends Controller
 {
     private $CharacterService;
@@ -24,22 +26,22 @@ class CharacterController extends Controller
 
     public function get($id)
     {
-        return $this->result($this->CharacterService->get($id));
+        return $this->result(CharacterResource::class, $this->CharacterService->get($id));
     }
 
     public function store(CharacterRequest $request)
     {
-        return $this->result($this->CharacterService->store($request->validated()));
+        return $this->result(CharacterResource::class, $this->CharacterService->store($request->validated()));
     }
 
     public function update($id, CharacterRequest $request)
     {
-        return $this->result($this->CharacterService->update($id, $request->validated()));
+        return $this->result(CharacterResource::class, $this->CharacterService->update($id, $request->validated()));
     }
 
     public function destroy($id)
     {
-        return $this->result($this->CharacterService->destroy($id));
+        return $this->result(CharacterResource::class, $this->CharacterService->destroy($id));
     }
 }
 

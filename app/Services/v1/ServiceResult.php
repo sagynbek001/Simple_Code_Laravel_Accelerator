@@ -45,4 +45,9 @@ class ServiceResult
     {
         return $this->fields['code'] == 200;
     }
+
+    public function hasData(array $fields = [])
+    {
+        return empty($this->fields['data']);
+    }
 }

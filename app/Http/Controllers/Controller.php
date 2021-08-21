@@ -12,15 +12,18 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected function result(ServiceResult $result)
+    protected function result($resourceClass, ServiceResult $result)
     {
-        return response()->json($result->data)->setStatusCode($result->code);
+        if (!$result->isSuccess()) {
+            return response()->json($result->data)->setStatusCode($result->code);
+        }
+        return new $resourceClass($result->data);
     }
 
     protected function resultCollection($collectionClass, ServiceResult $result)
     {
         if (!$result->isSuccess()) {
-            return $this->result($result);
+            return response()->json($result->data)->setStatusCode($result->code);
         }
         return new $collectionClass($result->data);
     }

@@ -7,56 +7,59 @@ use App\Services\v1\BaseService;
 use App\Repositories\CharacterRepository;
 class CharacterService extends BaseService
 {
-    private $repo;
+    private $repoCharacter;
 
     public function __construct()
     {
-        $this->repo = new CharacterRepository();
+        $this->repoCharacter = new CharacterRepository();
     }
 
     public function index(array $params): ServiceResult
     {
-        return $this->result($this->repo->index($params));
+        return $this->result($this->repoCharacter->index($params));
     }
 
     public function get($id): ServiceResult
     {
-        $model = $this->repo->get($id);
+        $model = $this->repoCharacter->get($id);
         if (is_null($model)) {
             return $this->errNotFound('Персонаж не найден');
         }
+        $ImageService = new ImageService();
+        $path = $ImageService->get($model->image_id)->__get('data');
+        $model['image_url'] = "https://rick-and-morty-backend.develop/storage/" . $path['path'];
         return $this->result($model);
     }
 
     public function store($data): ServiceResult
     {
-        if ($this->repo->existsName($data['name'], 0)) {
+        if ($this->repoCharacter->existsName($data['name'], 0)) {
             return $this->errValidate('Персонаж с таким именем уже существует');
         }
-        $this->repo->store($data);
-        return $this->ok('Персонаж сохранен');
+        $model = $this->repoCharacter->store($data);
+        return $this->ok($model, 'Персонаж сохранен');
     }
 
     public function update($id, $data): ServiceResult
     {
-        $model = $this->repo->get($id);
+        $model = $this->repoCharacter->get($id);
         if (is_null($model)) {
             return $this->errNotFound('Персонаж не найден');
         }
-        if ($this->repo->existsName($data['name'], $id)) {
+        if ($this->repoCharacter->existsName($data['name'], $id)) {
             return $this->errValidate('Персонаж с таким именем уже существует');
         }
-        $this->repo->update($model, $data);
+        $this->repoCharacter->update($model, $data);
         return $this->ok('Персонаж сохранен');
     }
 
     public function destroy($id): ServiceResult
     {
-        $model = $this->repo->get($id);
+        $model = $this->repoCharacter->get($id);
         if (is_null($model)) {
             return $this->errNotFound('Персонаж не найден');
         }
-        $this->repo->destroy($model);
+        $this->repoCharacter->destroy($model);
         return $this->ok('Персонаж удален');
     }
 }

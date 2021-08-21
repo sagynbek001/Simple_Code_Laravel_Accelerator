@@ -20,7 +20,7 @@ class ImageService extends BaseService
     {
         $model = $this->repo->get($id);
         if (is_null($model)) {
-            return $this->errNotFound('Картинка не найден');
+            return $this->errNotFound('Картинка не найденa');
         }
         return $this->result($model);
     }

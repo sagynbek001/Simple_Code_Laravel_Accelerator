@@ -25,7 +25,7 @@ class ImageController extends Controller
 
     public function destroy($id)
     {
-        return $this->result($this->ImageService->destroy($id));
+        return $this->result(ImageResource::class, $this->ImageService->destroy($id));
     }
 }
 
