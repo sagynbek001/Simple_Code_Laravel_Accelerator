@@ -17,7 +17,7 @@ class ImageController extends Controller
         $this->ImageService = new ImageService();
     }
 
-    public function store(Request $request)
+    public function store(ImageRequest $request)
     {
         return new ImageResource($this->ImageService->store($request));
         //return $this->result($this->ImageService->store($request));
