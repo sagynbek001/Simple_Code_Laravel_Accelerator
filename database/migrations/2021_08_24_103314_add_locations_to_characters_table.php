@@ -14,10 +14,10 @@ class AddLocationsToCharactersTable extends Migration
     public function up()
     {
         Schema::table('characters', function (Blueprint $table) {
-            $table->unsignedBigInteger('birth_location_id')->nullable()->index();
-            $table->foreign('birth_location_id')->references('id')->on('locations')->onDelete('cascade');
-            $table->unsignedBigInteger('current_location_id')->nullable()->index();
-            $table->foreign('current_location_id')->references('id')->on('locations')->onDelete('cascade');
+            $table->foreignId('birth_location_id')->nullable()->index();
+            $table->foreignId('current_location_id')->nullable()->index();
+            $table->foreign('birth_location_id')->references('id')->on('locations')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign('current_location_id')->references('id')->on('locations')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 

@@ -29,9 +29,9 @@ class CharacterRequest extends FormRequest
             'gender' => 'required|string|in:male,female',
             'race' => 'required|string|in:human,alien,robot,humanoid,animal',
             'description' => 'required|string|max:10000',
-            'image_id' => 'integer',
-            'birth_location_id' => 'integer',
-            'current_location_id' => 'integer',
+            'image_id' => 'nullable|numeric|exists:images,id,deleted_at,NULL',
+            'birth_location_id' => 'nullable|numeric|exists:images,id,deleted_at,NULL',
+            'current_location_id' => 'nullable|numeric|exists:images,id,deleted_at,NULL',
         ];
     }
 }

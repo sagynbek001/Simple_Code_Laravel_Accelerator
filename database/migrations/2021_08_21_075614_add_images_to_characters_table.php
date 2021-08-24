@@ -14,8 +14,8 @@ class AddImagesToCharactersTable extends Migration
     public function up()
     {
         Schema::table('characters', function (Blueprint $table) {
-            $table->unsignedBigInteger('image_id')->nullable()->index();
-            $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
+            $table->foreignId('image_id')->nullable()->index();
+            $table->foreign('image_id')->references('id')->on('images')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 
