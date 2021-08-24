@@ -19,6 +19,8 @@ class CreateLocationsTable extends Migration
             $table->enum('dimension', ['c-137', 'replaced', '5-126'])->index();
             $table->string('name')->index();
             $table->text('description');
+            $table->unsignedBigInteger('image_id')->nullable()->index();
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

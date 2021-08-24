@@ -11,4 +11,9 @@ class Location extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    public function image()
+    {
+        return $this->belongsTo(Image::class);
+    }
 }
