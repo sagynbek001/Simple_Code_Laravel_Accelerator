@@ -17,12 +17,12 @@ class Character extends Model
         return $this->belongsTo(Image::class);
     }
 
-    public function birth_location()
+    public function birthLocation()
     {
         return $this->belongsTo(Location::class);
     }
 
-    public function current_location()
+    public function currentLocation()
     {
         return $this->belongsTo(Location::class);
     }

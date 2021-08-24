@@ -8,7 +8,7 @@ class CharacterRepository
 {
     public function index(array $params)
     {
-        $query = Character::with(['Image', 'Birth_Location', 'Current_Location']);
+        $query = Character::with(['Image', 'birthLocation', 'currentLocation']);
 
         if (isset($params['gender']))
             $query = Character::whereIn('gender', $params['gender']);
@@ -61,7 +61,7 @@ class CharacterRepository
         return $model->delete();
     }
 
-    public function existsName($name, $id = null)
+    public function existsName($name, $id = 0): bool
     {
         return Character::where('name', '=', $name)->where('id', '!=', $id)->exists();
     }
