@@ -22,6 +22,8 @@ class CharacterResource extends JsonResource
             'race' => $this->race,
             'description' => $this->description,
             'image' => new ImageResource($this->image),
+            'birth_location' => new LocationResource($this->birth_location),
+            'current_location' => new LocationResource($this->current_location),
         ];
     }
 }

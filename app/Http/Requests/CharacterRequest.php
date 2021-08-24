@@ -30,6 +30,8 @@ class CharacterRequest extends FormRequest
             'race' => 'required|string|in:human,alien,robot,humanoid,animal',
             'description' => 'required|string|max:10000',
             'image_id' => 'integer',
+            'birth_location_id' => 'integer',
+            'current_location_id' => 'integer',
         ];
     }
 }
