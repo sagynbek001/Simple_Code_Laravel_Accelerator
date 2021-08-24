@@ -15,12 +15,13 @@ class CharacterResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'status' => $this->status,
             'gender' => $this->gender,
             'race' => $this->race,
             'description' => $this->description,
-            'image' => new ImageResource($this->image)
+            'image' => new ImageResource($this->image),
         ];
     }
 }

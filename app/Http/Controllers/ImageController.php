@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use App\Services\ImageService; //validation needs to be implemented
+use App\Services\v1\ImageService; //validation needs to be implemented
 use App\Http\Requests\ImageRequest;
 use App\Http\Resources\ImageResource;
 

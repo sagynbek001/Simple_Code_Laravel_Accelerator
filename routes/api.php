@@ -28,6 +28,14 @@ Route::group(['prefix' => 'v1'], function () {
         Route::delete('/{id}', [CharacterController::class, 'destroy'])->where(['id' => '[0-9]+']);
     });
 
+    Route::group(['prefix' => 'locations'], function () {
+        Route::get('/', [LocationController::class, 'index']);
+        Route::get('/{id}', [LocationController::class, 'get'])->where(['id' => '[0-9]+']);
+        Route::post('/', [LocationController::class, 'store']);
+        Route::put('/{id}', [LocationController::class, 'update'])->where(['id' => '[0-9]+']);
+        Route::delete('/{id}', [LocationController::class, 'destroy'])->where(['id' => '[0-9]+']);
+    });
+
     Route::group(['prefix' => 'images'], function () {
         Route::post('/', [ImageController::class, 'store']);
         Route::delete('/{id}', [ImageController::class, 'destroy'])->where(['id' => '[0-9]+']);

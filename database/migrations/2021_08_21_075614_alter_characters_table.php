@@ -14,7 +14,8 @@ class AlterCharactersTable extends Migration
     public function up()
     {
         Schema::table('characters', function (Blueprint $table) {
-            $table->integer('image_id');
+            $table->unsignedBigInteger('image_id')->nullable()->index();
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
         });
     }
 

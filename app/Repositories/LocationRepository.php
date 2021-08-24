@@ -2,22 +2,19 @@
 
 namespace App\Repositories;
 
-use App\Models\Character;
+use App\Models\Location;
 
-class CharacterRepository
+class LocationRepository
 {
     public function index(array $params)
     {
-        $query = Character::with(['Image']);
+        $query = Location::with(['Image']);
 
-        if (isset($params['gender']))
-            $query = Character::whereIn('gender', $params['gender']);
+        if (isset($params['type']))
+            $query = Location::whereIn('type', $params['type']);
 
-        if (isset($params['race']))
-            $query->whereIn('race', $params['race']);
-
-        if (isset($params['status']))
-            $query->whereIn('status', $params['status']);
+        if (isset($params['dimension']))
+            $query->whereIn('dimension', $params['dimension']);
 
         if (isset($params['search'])){
             $query->where(function ($subQuery) use ($params) {
@@ -41,14 +38,14 @@ class CharacterRepository
         }
     }
 
-    public function get($id): ?Character
+    public function get($id): ?Location
     {
-        return Character::find($id);
+        return Location::find($id);
     }
 
-    public function store(array $data): Character
+    public function store(array $data): Location
     {
-        return Character::create($data);
+        return Location::create($data);
     }
 
     public function update($model, $data)
@@ -63,6 +60,6 @@ class CharacterRepository
 
     public function existsName($name, $id = null)
     {
-        return Character::where('name', '=', $name)->where('id', '!=', $id)->exists();
+        return Location::where('name', '=', $name)->where('id', '!=', $id)->exists();
     }
 }
