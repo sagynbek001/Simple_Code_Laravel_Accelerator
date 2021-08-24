@@ -25,9 +25,6 @@ class CharacterService extends BaseService
         if (is_null($model)) {
             return $this->errNotFound('Персонаж не найден');
         }
-        $ImageService = new ImageService();
-        $path = $ImageService->get($model->image_id)->__get('data');
-        $model['image_url'] = url("/storage/{$path['path']}");
         return $this->result($model);
     }
 

@@ -8,7 +8,7 @@ class CharacterRepository
 {
     public function index(array $params)
     {
-        $query = Character::with(['Image']);
+        $query = Character::with(['Image', 'Birth_Location', 'Current_Location']);
 
         if (isset($params['gender']))
             $query = Character::whereIn('gender', $params['gender']);

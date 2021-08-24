@@ -19,11 +19,11 @@ class Character extends Model
 
     public function birth_location()
     {
-        return $this->belongsTo(Location::class);
+        return $this->belongsTo(Birth_Location::class);
     }
 
     public function current_location()
     {
-        return $this->belongsTo(Location::class);
+        return $this->belongsTo(Current_Location::class);
     }
 }
