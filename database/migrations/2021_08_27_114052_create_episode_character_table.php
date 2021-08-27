@@ -14,9 +14,10 @@ class CreateEpisodeCharacterTable extends Migration
     public function up()
     {
         Schema::create('episode_character', function (Blueprint $table) {
-            $table->unsignedBigInteger('character_id')->nullable()->index();
+            $table->id();
+            $table->foreignId('character_id')->constrained()->nullable()->index();
             $table->foreign('character_id')->references('id')->on('characters')->onDelete('restrict');
-            $table->unsignedBigInteger('episode_id')->nullable()->index();
+            $table->foreignId('episode_id')->constrained()->nullable()->index();
             $table->foreign('episode_id')->references('id')->on('episodes')->onDelete('restrict');
             $table->timestamps();
         });
