@@ -15,10 +15,9 @@ class CreateCharacterEpisodeTable extends Migration
     {
         Schema::create('character_episode', function (Blueprint $table) {
             $table->unsignedBigInteger('character_id')->nullable()->index();
-            $table->foreign('character_id')->references('id')->on('characters')->onDelete('cascade');
+            $table->foreign('character_id')->references('id')->on('characters')->onDelete('restrict');
             $table->unsignedBigInteger('episode_id')->nullable()->index();
-            $table->foreign('episode_id')->references('id')->on('episodes')->onDelete('cascade');
-            $table->softDeletes();
+            $table->foreign('episode_id')->references('id')->on('episodes')->onDelete('restrict');
             $table->timestamps();
         });
     }

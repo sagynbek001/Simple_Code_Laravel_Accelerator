@@ -20,7 +20,7 @@ class CreateLocationsTable extends Migration
             $table->string('name')->index();
             $table->text('description');
             $table->unsignedBigInteger('image_id')->nullable()->index();
-            $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('restrict');
             $table->softDeletes();
             $table->timestamps();
         });
