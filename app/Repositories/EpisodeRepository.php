@@ -2,22 +2,26 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\EpisodeCollection;
 use App\Models\Episode;
 
 class EpisodeRepository
 {
     public function index(array $params)
     {
-        $query = Episode::with(['Image', 'birthLocation', 'currentLocation']);
+        $query = Episode::with(['Image']);
 
-        if (isset($params['gender']))
-            $query = Episode::whereIn('gender', $params['gender']);
+        if (isset($params['season']))
+            $query = Episode::whereIn('season', $params['season']);
 
-        if (isset($params['race']))
-            $query->whereIn('race', $params['race']);
+        if (isset($params['series']))
+            $query->whereIn('series', $params['series']);
 
-        if (isset($params['status']))
-            $query->whereIn('status', $params['status']);
+        if (isset($params['premiere_from']))
+            $query->where('premiere', '>=', $params['premiere_from']);
+
+        if (isset($params['premiere_to']))
+            $query->where('premiere', '<=', $params['premiere_to']);
 
         if (isset($params['search'])){
             $query->where(function ($subQuery) use ($params) {
