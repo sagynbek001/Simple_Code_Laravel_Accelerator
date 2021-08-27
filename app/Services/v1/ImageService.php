@@ -9,16 +9,16 @@ use App\Repositories\ImageRepository;
 
 class ImageService extends BaseService
 {
-    private $repo;
+    private $repoImage;
 
-    public function __construct()
+    public function __construct(ImageRepository $repoImage)
     {
-        $this->repo = new ImageRepository();
+        $this->repoImage = $repoImage;
     }
 
     public function get($id): ServiceResult
     {
-        $image = $this->repo->get($id);
+        $image = $this->repoImage->get($id);
         if (is_null($image)) {
             return $this->errNotFound('Картинка не найденa');
         }
@@ -28,18 +28,18 @@ class ImageService extends BaseService
     public function store($request): ServiceResult
     {
         $path = $request->file('file')->storePublicly('images', 'public');
-        $image = $this->repo->store(['path'=>$path]);
+        $image = $this->repoImage->store(['path'=>$path]);
         return $this->result($image);
     }
 
     public function destroy($id): ServiceResult
     {
-        $image = $this->repo->get($id);
+        $image = $this->repoImage->get($id);
         if (is_null($image)) {
             return $this->errNotFound('Картинка не найдена');
         }
         Storage::delete(str_replace("images/", "", $image->path));
-        $this->repo->destroy($image);
+        $this->repoImage->destroy($image);
         return $this->ok('Картинка удалена');
     }
 }

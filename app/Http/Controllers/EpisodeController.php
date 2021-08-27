@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\v1\EpisodeService;
+use App\Services\v1\episodeService;
 use App\Http\Requests\EpisodeIndexRequest; //validation needs to be implemented
 use App\Http\Requests\EpisodeRequest;
 use App\Http\Resources\CharacterCollection;
@@ -12,42 +12,42 @@ use App\Http\Resources\EpisodeResource;
 
 class EpisodeController extends Controller
 {
-    private $EpisodeService;
+    private $episodeService;
 
-    public function __construct()
+    public function __construct(EpisodeService $episodeService)
     {
-        $this->EpisodeService = new EpisodeService();
+        $this->episodeService = $episodeService;
     }
 
     public function index(Request $request)
     {
-        $result = $this->EpisodeService->index($request->all());
+        $result = $this->episodeService->index($request->all());
         return $this->resultCollection(EpisodeCollection::class, $result);
     }
 
     public function get($id)
     {
-        return $this->result(EpisodeResource::class, $this->EpisodeService->get($id));
+        return $this->result(EpisodeResource::class, $this->episodeService->get($id));
     }
 
     public function getCharacters($id, Request $request)
     {
-        return $this->result(CharacterCollection::class, $this->EpisodeService->getCharacters($id, $request->all()));
+        return $this->result(CharacterCollection::class, $this->episodeService->getCharacters($id, $request->all()));
     }
 
     public function store(EpisodeRequest $request)
     {
-        return $this->result(EpisodeResource::class, $this->EpisodeService->store($request->validated()));
+        return $this->result(EpisodeResource::class, $this->episodeService->store($request->validated()));
     }
 
     public function update($id, EpisodeRequest $request)
     {
-        return $this->result(EpisodeResource::class, $this->EpisodeService->update($id, $request->validated()));
+        return $this->result(EpisodeResource::class, $this->episodeService->update($id, $request->validated()));
     }
 
     public function destroy($id)
     {
-        return $this->result(EpisodeResource::class, $this->EpisodeService->destroy($id));
+        return $this->result(EpisodeResource::class, $this->episodeService->destroy($id));
     }
 }
 

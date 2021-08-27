@@ -4,27 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use App\Services\v1\ImageService; //validation needs to be implemented
+use App\Services\v1\imageService; //validation needs to be implemented
 use App\Http\Requests\ImageRequest;
 use App\Http\Resources\ImageResource;
 
 class ImageController extends Controller
 {
-    private $ImageService;
+    private $imageService;
 
-    public function __construct()
+    public function __construct(imageService $imageService)
     {
-        $this->ImageService = new ImageService();
+        $this->imageService = $imageService;
     }
 
     public function store(ImageRequest $request)
     {
-        return new ImageResource($this->ImageService->store($request->validated()));
+        return new ImageResource($this->imageService->store($request->validated()));
     }
 
     public function destroy($id)
     {
-        return $this->result(ImageResource::class, $this->ImageService->destroy($id));
+        return $this->result(ImageResource::class, $this->imageService->destroy($id));
     }
 }
 

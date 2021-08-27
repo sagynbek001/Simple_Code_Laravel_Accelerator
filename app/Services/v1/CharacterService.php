@@ -9,9 +9,9 @@ class CharacterService extends BaseService
 {
     private $repoCharacter;
 
-    public function __construct()
+    public function __construct(CharacterRepository $repoCharacter)
     {
-        $this->repoCharacter = new CharacterRepository();
+        $this->repoCharacter = $repoCharacter;
     }
 
     public function index(array $params): ServiceResult

@@ -9,9 +9,9 @@ class LocationService extends BaseService
 {
     private $repoLocation;
 
-    public function __construct()
+    public function __construct(LocationRepository $repoLocation)
     {
-        $this->repoLocation = new LocationRepository();
+        $this->repoLocation = $repoLocation;
     }
 
     public function index(array $params): ServiceResult

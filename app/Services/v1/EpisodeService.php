@@ -9,9 +9,9 @@ class EpisodeService extends BaseService
 {
     private $repoEpisode;
 
-    public function __construct()
+    public function __construct(EpisodeRepository $repoEpisode)
     {
-        $this->repoEpisode = new EpisodeRepository();
+        $this->repoEpisode = $repoEpisode;
     }
 
     public function index(array $params): ServiceResult

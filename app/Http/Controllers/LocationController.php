@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ImageRequest;
 use Illuminate\Http\Request;
-use App\Services\v1\LocationService;
+use App\Services\v1\locationService;
 use App\Http\Requests\LocationIndexRequest; //validation needs to be implemented
 use App\Http\Requests\LocationRequest;
 use App\Http\Resources\LocationCollection;
@@ -12,46 +12,46 @@ use App\Http\Resources\LocationResource;
 
 class LocationController extends Controller
 {
-    private $LocationService;
+    private $locationService;
 
-    public function __construct()
+    public function __construct(locationService $locationService)
     {
-        $this->LocationService = new LocationService();
+        $this->locationService = $locationService;
     }
 
     public function index(Request $request)
     {
-        $result = $this->LocationService->index($request->all());
+        $result = $this->locationService->index($request->all());
         return $this->resultCollection(LocationCollection::class, $result);
     }
 
     public function get($id)
     {
-        return $this->result(LocationResource::class, $this->LocationService->get($id));
+        return $this->result(LocationResource::class, $this->locationService->get($id));
     }
 
     public function store(LocationRequest $request)
     {
-        return $this->result(LocationResource::class, $this->LocationService->store($request->validated()));
+        return $this->result(LocationResource::class, $this->locationService->store($request->validated()));
     }
 
     public function update($id, LocationRequest $request)
     {
-        return $this->result(LocationResource::class, $this->LocationService->update($id, $request->validated()));
+        return $this->result(LocationResource::class, $this->locationService->update($id, $request->validated()));
     }
 
     public function destroy($id)
     {
-        return $this->result(LocationResource::class, $this->LocationService->destroy($id));
+        return $this->result(LocationResource::class, $this->locationService->destroy($id));
     }
 
     public function storeImage($id, ImageRequest $request)
     {
-        return $this->result(LocationResource::class, $this->LocationService->storeImage($id, $request->validated()));
+        return $this->result(LocationResource::class, $this->locationService->storeImage($id, $request->validated()));
     }
 
     public function destroyImage($id)
     {
-        return $this->result(LocationResource::class, $this->LocationService->destroyImage($id));
+        return $this->result(LocationResource::class, $this->locationService->destroyImage($id));
     }
 }
