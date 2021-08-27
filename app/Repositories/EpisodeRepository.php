@@ -50,9 +50,14 @@ class EpisodeRepository
         return Episode::find($id);
     }
 
-    public function getCharacters($id)
+    public function getCharacters($model, $params)
     {
-        return Episode::find($id)->characters;
+        $query = $model->characters();
+        if (isset($params['per_page'])) {
+            return $query->paginate($params['per_page']);
+        } else {
+            return $query->paginate(10);
+        }
     }
 
     public function store(array $data): Episode

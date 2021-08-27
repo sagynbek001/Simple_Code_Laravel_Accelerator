@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\v1\EpisodeService;
 use App\Http\Requests\EpisodeIndexRequest; //validation needs to be implemented
 use App\Http\Requests\EpisodeRequest;
+use App\Http\Resources\CharacterCollection;
 use App\Http\Resources\EpisodeCollection;
 use App\Http\Resources\EpisodeResource;
 
@@ -27,6 +28,11 @@ class EpisodeController extends Controller
     public function get($id)
     {
         return $this->result(EpisodeResource::class, $this->EpisodeService->get($id));
+    }
+
+    public function getCharacters($id, Request $request)
+    {
+        return $this->result(CharacterCollection::class, $this->EpisodeService->getCharacters($id, $request->all()));
     }
 
     public function store(EpisodeRequest $request)

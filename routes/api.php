@@ -51,6 +51,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'episodes'], function () {
         Route::get('/', [EpisodeController::class, 'index']);
         Route::get('/{id}', [EpisodeController::class, 'get'])->where(['id' => '[0-9]+']);
+        Route::get('/{id}/characters', [EpisodeController::class, 'getCharacters'])->where(['id' => '[0-9]+']);
         Route::post('/', [EpisodeController::class, 'store']);
         Route::put('/{id}', [EpisodeController::class, 'update'])->where(['id' => '[0-9]+']);
         Route::delete('/{id}', [EpisodeController::class, 'destroy'])->where(['id' => '[0-9]+']);

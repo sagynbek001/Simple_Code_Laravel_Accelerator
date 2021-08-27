@@ -28,6 +28,15 @@ class EpisodeService extends BaseService
         return $this->result($model);
     }
 
+    public function getCharacters($id, array $params): ServiceResult
+    {
+        $model = $this->repoEpisode->get($id);
+        if (is_null($model)) {
+            return $this->errNotFound('Эпизод не найден');
+        }
+        return $this->result($this->repoEpisode->getCharacters($model, $params));
+    }
+
     public function store($data): ServiceResult
     {
         if ($this->repoEpisode->existsName($data['name'], 0)) {
