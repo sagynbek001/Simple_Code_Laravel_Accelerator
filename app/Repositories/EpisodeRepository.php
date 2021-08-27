@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Models\Character;
+use App\Models\Episode;
 
-class CharacterRepository
+class EpisodeRepository
 {
     public function index(array $params)
     {
-        $query = Character::with(['Image', 'birthLocation', 'currentLocation']);
+        $query = Episode::with(['Image', 'birthLocation', 'currentLocation']);
 
         if (isset($params['gender']))
-            $query = Character::whereIn('gender', $params['gender']);
+            $query = Episode::whereIn('gender', $params['gender']);
 
         if (isset($params['race']))
             $query->whereIn('race', $params['race']);
@@ -41,24 +41,19 @@ class CharacterRepository
         }
     }
 
-    public function get($id): ?Character
+    public function get($id): ?Episode
     {
-        return Character::find($id);
+        return Episode::find($id);
     }
 
-    public function getEpisodes($model, $params)
+    public function getCharacters($id)
     {
-        $query = $model->episodes();
-        if (isset($params['per_page'])) {
-            return $query->paginate($params['per_page']);
-        } else {
-            return $query->paginate(10);
-        }
+        return Episode::find($id)->characters;
     }
 
-    public function store(array $data): Character
+    public function store(array $data): Episode
     {
-        return Character::create($data);
+        return Episode::create($data);
     }
 
     public function update($model, $data)
@@ -73,6 +68,6 @@ class CharacterRepository
 
     public function existsName($name, $id = 0): bool
     {
-        return Character::where('name', '=', $name)->where('id', '!=', $id)->exists();
+        return Episode::where('name', '=', $name)->where('id', '!=', $id)->exists();
     }
 }

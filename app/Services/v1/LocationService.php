@@ -59,4 +59,26 @@ class LocationService extends BaseService
         $this->repoLocation->destroy($model);
         return $this->ok('Локация удалена');
     }
+
+    public function storeImage($id, $data): ServiceResult
+    {
+        $model = $this->repoLocation->get($id);
+        if (is_null($model)) {
+            return $this->errNotFound('Локация не найдена');
+        }
+
+        $result = $this->ImageService->store($model, $data['file'], true);
+        $this->repoLocation->destroy($model);
+        return $this->ok('Локация удалена');
+    }
+
+    public function destroyImage($id)
+    {
+        $model = $this->repoLocation->get($id);
+        if (is_null($model)) {
+            return $this->errNotFound('Локация не найдена');
+        }
+
+        return $this->result(LocationResource::class, $this->LocationService->destroyImage($id));
+    }
 }

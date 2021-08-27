@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LocationResource extends JsonResource
+class LocationShortResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,7 +19,6 @@ class LocationResource extends JsonResource
             'type' => $this->type,
             'dimension' => $this->dimension,
             'description' => $this->description,
-            'image' => new ImageResource($this->image),
         ];
     }
 }

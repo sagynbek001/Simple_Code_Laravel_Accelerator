@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LocationResource extends JsonResource
+class EpisodeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,10 @@ class LocationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => $this->type,
-            'dimension' => $this->dimension,
+            'name' => $this->name,
+            'season' => $this->season,
+            'series' => $this->series,
+            'premiere' => $this->premiere,
             'description' => $this->description,
             'image' => new ImageResource($this->image),
         ];

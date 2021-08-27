@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImageRequest;
 use Illuminate\Http\Request;
 use App\Services\v1\LocationService;
 use App\Http\Requests\LocationIndexRequest; //validation needs to be implemented
@@ -42,5 +43,15 @@ class LocationController extends Controller
     public function destroy($id)
     {
         return $this->result(LocationResource::class, $this->LocationService->destroy($id));
+    }
+
+    public function storeImage($id, ImageRequest $request)
+    {
+        return $this->result(LocationResource::class, $this->LocationService->storeImage($id, $request->validated()));
+    }
+
+    public function destroyImage($id)
+    {
+        return $this->result(LocationResource::class, $this->LocationService->destroyImage($id));
     }
 }

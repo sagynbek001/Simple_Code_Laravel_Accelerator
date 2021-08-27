@@ -26,4 +26,9 @@ class Character extends Model
     {
         return $this->belongsTo(Location::class);
     }
+
+    public function episodes()
+    {
+        return $this->belongsToMany(Episode::class);
+    }
 }

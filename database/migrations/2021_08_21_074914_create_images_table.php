@@ -15,7 +15,7 @@ class CreateImagesTable extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('path')->index();
+            $table->string('path');
             $table->softDeletes();
             $table->timestamps();
         });

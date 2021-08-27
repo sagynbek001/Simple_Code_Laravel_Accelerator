@@ -28,6 +28,15 @@ class CharacterService extends BaseService
         return $this->result($model);
     }
 
+    public function getEpisodes($id, array $params): ServiceResult
+    {
+        $model = $this->repoCharacter->get($id);
+        if (is_null($model)) {
+            return $this->errNotFound('Персонаж не найден');
+        }
+        return $this->result($this->repoCharacter->getEpisodes($model, $params));
+    }
+
     public function store($data): ServiceResult
     {
         if ($this->repoCharacter->existsName($data['name'], 0)) {
@@ -51,6 +60,25 @@ class CharacterService extends BaseService
     }
 
     public function destroy($id): ServiceResult
+    {
+        $model = $this->repoCharacter->get($id);
+        if (is_null($model)) {
+            return $this->errNotFound('Персонаж не найден');
+        }
+        $this->repoCharacter->destroy($model);
+        return $this->ok('Персонаж удален');
+    }
+
+    public function storeImage($data): ServiceResult
+    {
+        if ($this->repoCharacter->existsName($data['name'], 0)) {
+            return $this->errValidate('Персонаж с таким именем уже существует');
+        }
+        $model = $this->repoCharacter->store($data);
+        return $this->ok($model, 'Персонаж сохранен');
+    }
+
+    public function destroyImage($id): ServiceResult
     {
         $model = $this->repoCharacter->get($id);
         if (is_null($model)) {
