@@ -11,7 +11,7 @@ class LocationRepository
         $query = Location::with(['Image']);
 
         if (isset($params['type']))
-            $query = Location::whereIn('type', $params['type']);
+            $query->whereIn('type', $params['type']);
 
         if (isset($params['dimension']))
             $query->whereIn('dimension', $params['dimension']);

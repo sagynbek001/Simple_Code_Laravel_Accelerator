@@ -15,10 +15,10 @@ class CreateEpisodeCharacterTable extends Migration
     {
         Schema::create('episode_character', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('character_id')->constrained()->nullable()->index();
-            $table->foreign('character_id')->references('id')->on('characters')->onDelete('restrict');
-            $table->foreignId('episode_id')->constrained()->nullable()->index();
-            $table->foreign('episode_id')->references('id')->on('episodes')->onDelete('restrict');
+            $table->foreignId('character_id')->nullable()->index();
+            $table->foreignId('episode_id')->nullable()->index();
+            $table->foreign('character_id')->references('id')->on('characters')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign('episode_id')->references('id')->on('episodes')->onUpdate('restrict')->onDelete('restrict');
             $table->timestamps();
         });
     }

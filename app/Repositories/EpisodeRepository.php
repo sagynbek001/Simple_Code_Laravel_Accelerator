@@ -12,7 +12,7 @@ class EpisodeRepository
         $query = Episode::with(['Image']);
 
         if (isset($params['season']))
-            $query = Episode::whereIn('season', $params['season']);
+            $query->whereIn('season', $params['season']);
 
         if (isset($params['series']))
             $query->whereIn('series', $params['series']);

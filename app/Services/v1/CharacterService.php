@@ -43,7 +43,7 @@ class CharacterService extends BaseService
             return $this->errValidate('Персонаж с таким именем уже существует');
         }
         $model = $this->repoCharacter->store($data);
-        return $this->ok($model, 'Персонаж сохранен');
+        return $this->ok('Персонаж сохранен');
     }
 
     public function update($id, $data): ServiceResult
