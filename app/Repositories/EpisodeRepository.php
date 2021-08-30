@@ -75,6 +75,16 @@ class EpisodeRepository
         return $model->delete();
     }
 
+    public function storeImage($id, $image_id)
+    {
+        return Episode::where('id', $id)->update(array('image_id' => $image_id));
+    }
+
+    public function destroyImage($id)
+    {
+        return Episode::where('id', $id)->update(array('image_id' => null));
+    }
+
     public function existsName($name, $id = 0): bool
     {
         return Episode::where('name', '=', $name)->where('id', '!=', $id)->exists();

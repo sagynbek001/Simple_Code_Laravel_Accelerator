@@ -5,6 +5,7 @@ namespace App\Services\v1;
 use App\Services\v1\ServiceResult;
 use App\Services\v1\BaseService;
 use App\Repositories\LocationRepository;
+use App\Repositories\ImageRepository;
 class LocationService extends BaseService
 {
     private $repoLocation;
@@ -34,7 +35,7 @@ class LocationService extends BaseService
             return $this->errValidate('Локация с таким именем уже существует');
         }
         $model = $this->repoLocation->store($data);
-        return $this->ok($model, 'Локация сохранена');
+        return $this->ok('Локация сохранена');
     }
 
     public function update($id, $data): ServiceResult
@@ -60,25 +61,17 @@ class LocationService extends BaseService
         return $this->ok('Локация удалена');
     }
 
-    public function storeImage($id, $data): ServiceResult
+    public function storeImage($id, $request): ServiceResult
     {
-        $model = $this->repoLocation->get($id);
-        if (is_null($model)) {
-            return $this->errNotFound('Локация не найдена');
-        }
-
-        $result = $this->ImageService->store($model, $data['file'], true);
-        $this->repoLocation->destroy($model);
-        return $this->ok('Локация удалена');
+        $imageService = new ImageService(new ImageRepository());
+        $model = $imageService->store($request);
+        $this->repoLocation->storeImage($id, $model->id);
+        return $this->ok('Картинка добавлена');
     }
 
-    public function destroyImage($id)
+    public function destroyImage($id): ServiceResult
     {
-        $model = $this->repoLocation->get($id);
-        if (is_null($model)) {
-            return $this->errNotFound('Локация не найдена');
-        }
-
-        return $this->result(LocationResource::class, $this->LocationService->destroyImage($id));
+        $this->repoLocation->destroyImage($id);
+        return $this->ok('Картинка удалена');
     }
 }

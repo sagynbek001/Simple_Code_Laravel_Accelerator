@@ -58,6 +58,17 @@ class LocationRepository
         return $model->delete();
     }
 
+    public function storeImage($id, $image_id)
+    {
+        return Location::where('id', $id)->update(array('image_id' => $image_id));
+    }
+
+    public function destroyImage($id)
+    {
+        return Location::where('id', $id)->update(array('image_id' => null));
+    }
+
+
     public function existsName($name, $id = null)
     {
         return Location::where('name', '=', $name)->where('id', '!=', $id)->exists();

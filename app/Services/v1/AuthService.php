@@ -5,7 +5,6 @@ namespace App\Services\v1;
 use App\Services\v1\ServiceResult;
 use App\Services\v1\BaseService;
 use App\Repositories\UserRepository;
-use GrahamCampbell\ResultType\Result;
 use Illuminate\Support\Facades\Auth;
 
 class AuthService extends BaseService{
@@ -46,7 +45,7 @@ class AuthService extends BaseService{
     public function get_profile(array $data): ServiceResult
     {
         $model = $this->repoUser->register($data);
-        return $this->ok($model, 'Пользователь зарегистрировн');
+        return $this->ok('Пользователь зарегистрировн');
     }
 
     public function logout($phone): ServiceResult

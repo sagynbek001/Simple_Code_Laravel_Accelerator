@@ -5,6 +5,8 @@ namespace App\Services\v1;
 use App\Services\v1\ServiceResult;
 use App\Services\v1\BaseService;
 use App\Repositories\CharacterRepository;
+use App\Repositories\ImageRepository;
+
 class CharacterService extends BaseService
 {
     private $repoCharacter;
@@ -69,22 +71,17 @@ class CharacterService extends BaseService
         return $this->ok('Персонаж удален');
     }
 
-    public function storeImage($data): ServiceResult
+    public function storeImage($id, $request): ServiceResult
     {
-        if ($this->repoCharacter->existsName($data['name'], 0)) {
-            return $this->errValidate('Персонаж с таким именем уже существует');
-        }
-        $model = $this->repoCharacter->store($data);
-        return $this->ok($model, 'Персонаж сохранен');
+        $imageService = new ImageService(new ImageRepository());
+        $model = $imageService->store($request);
+        $this->repoCharacter->storeImage($id, $model->id);
+        return $this->ok('Картинка добавлена');
     }
 
     public function destroyImage($id): ServiceResult
     {
-        $model = $this->repoCharacter->get($id);
-        if (is_null($model)) {
-            return $this->errNotFound('Персонаж не найден');
-        }
-        $this->repoCharacter->destroy($model);
-        return $this->ok('Персонаж удален');
+        $this->repoCharacter->destroyImage($id);
+        return $this->ok('Картинка удалена');
     }
 }

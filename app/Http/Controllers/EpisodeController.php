@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\v1\episodeService;
 use App\Http\Requests\EpisodeIndexRequest; //validation needs to be implemented
 use App\Http\Requests\EpisodeRequest;
+use App\Http\Requests\ImageRequest;
 use App\Http\Resources\CharacterCollection;
 use App\Http\Resources\EpisodeCollection;
 use App\Http\Resources\EpisodeResource;
@@ -27,27 +28,37 @@ class EpisodeController extends Controller
 
     public function get($id)
     {
-        return $this->result(EpisodeResource::class, $this->episodeService->get($id));
+        return new EpisodeResource($this->episodeService->get($id));
     }
 
     public function getCharacters($id, Request $request)
     {
-        return $this->result(CharacterCollection::class, $this->episodeService->getCharacters($id, $request->all()));
+        return $this->resultCollection(CharacterCollection::class, $this->episodeService->getCharacters($id, $request->all()));
     }
 
     public function store(EpisodeRequest $request)
     {
-        return $this->result(EpisodeResource::class, $this->episodeService->store($request->validated()));
+        return $this->result($this->episodeService->store($request->validated()));
     }
 
     public function update($id, EpisodeRequest $request)
     {
-        return $this->result(EpisodeResource::class, $this->episodeService->update($id, $request->validated()));
+        return $this->result($this->episodeService->update($id, $request->validated()));
     }
 
     public function destroy($id)
     {
-        return $this->result(EpisodeResource::class, $this->episodeService->destroy($id));
+        return $this->result($this->episodeService->destroy($id));
+    }
+
+    public function storeImage($id, ImageRequest $request)
+    {
+        return $this->result($this->episodeService->storeImage($id, $request));
+    }
+
+    public function destroyImage($id)
+    {
+        return $this->result($this->episodeService->destroyImage($id));
     }
 }
 

@@ -20,9 +20,4 @@ class ImageRepository
     {
         return $model->delete();
     }
-
-    /*public function existsName($name, $id)
-    {
-        return Image::where('', '=', $name)->where('id', '!=', $id)->exists();
-    }*/
 }

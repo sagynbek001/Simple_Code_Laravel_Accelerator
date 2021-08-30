@@ -19,12 +19,12 @@ class ImageController extends Controller
 
     public function store(ImageRequest $request)
     {
-        return new ImageResource($this->imageService->store($request->validated()));
+        return $this->result($this->imageService->store($request->validated()));
     }
 
     public function destroy($id)
     {
-        return $this->result(ImageResource::class, $this->imageService->destroy($id));
+        return $this->result($this->imageService->destroy($id));
     }
 }
 

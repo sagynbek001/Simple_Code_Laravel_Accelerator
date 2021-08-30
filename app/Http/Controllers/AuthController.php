@@ -5,13 +5,8 @@ namespace App\Http\Controllers;
 use App\Services\v1\AuthService;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Http\Resources\LoginResource;
 use App\Http\Resources\ProfileResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -39,8 +34,6 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        //Session::flush();
-        //Auth::logout();
         return $this->result($this->authService->logout($request->user()['phone']));
     }
 }

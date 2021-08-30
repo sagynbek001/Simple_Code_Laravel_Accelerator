@@ -11,7 +11,7 @@ class CharacterRepository
         $query = Character::with(['Image', 'birthLocation', 'currentLocation']);
 
         if (isset($params['gender']))
-            $query = Character::whereIn('gender', $params['gender']);
+            $query->whereIn('gender', $params['gender']);
 
         if (isset($params['race']))
             $query->whereIn('race', $params['race']);
@@ -69,6 +69,16 @@ class CharacterRepository
     public function destroy($model)
     {
         return $model->delete();
+    }
+
+    public function storeImage($id, $image_id)
+    {
+        return Character::where('id', $id)->update(array('image_id' => $image_id));
+    }
+
+    public function destroyImage($id)
+    {
+        return Character::where('id', $id)->update(array('image_id' => null));
     }
 
     public function existsName($name, $id = 0): bool

@@ -5,6 +5,7 @@ namespace App\Services\v1;
 use App\Services\v1\ServiceResult;
 use App\Services\v1\BaseService;
 use App\Repositories\EpisodeRepository;
+use App\Repositories\ImageRepository;
 class EpisodeService extends BaseService
 {
     private $repoEpisode;
@@ -43,7 +44,7 @@ class EpisodeService extends BaseService
             return $this->errValidate('Эпизод с таким именем уже существует');
         }
         $model = $this->repoEpisode->store($data);
-        return $this->ok($model, 'Эпизод сохранен');
+        return $this->ok('Эпизод сохранен');
     }
 
     public function update($id, $data): ServiceResult
@@ -67,5 +68,19 @@ class EpisodeService extends BaseService
         }
         $this->repoEpisode->destroy($model);
         return $this->ok('Эпизод удален');
+    }
+
+    public function storeImage($id, $request): ServiceResult
+    {
+        $imageService = new ImageService(new ImageRepository());
+        $model = $imageService->store($request);
+        $this->repoEpisode->storeImage($id, $model->id);
+        return $this->ok('Картинка добавлена');
+    }
+
+    public function destroyImage($id): ServiceResult
+    {
+        $this->repoEpisode->destroyImage($id);
+        return $this->ok('Картинка удалена');
     }
 }

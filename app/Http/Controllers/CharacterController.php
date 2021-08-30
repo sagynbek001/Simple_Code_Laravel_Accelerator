@@ -28,37 +28,37 @@ class CharacterController extends Controller
 
     public function get($id)
     {
-        return $this->result(CharacterResource::class, $this->characterService->get($id));
+        return new CharacterResource($this->characterService->get($id));
     }
 
     public function getEpisodes($id, Request $request)
     {
-        return $this->result(EpisodeCollection::class, $this->characterService->getEpisodes($id, $request->all()));
+        return $this->resultCollection(EpisodeCollection::class, $this->characterService->getEpisodes($id, $request->all()));
     }
 
     public function store(CharacterRequest $request)
     {
-        return $this->result(CharacterResource::class, $this->characterService->store($request->validated()));
+        return $this->result($this->characterService->store($request->validated()));
     }
 
     public function update($id, CharacterRequest $request)
     {
-        return $this->result(CharacterResource::class, $this->characterService->update($id, $request->validated()));
+        return $this->result($this->characterService->update($id, $request->validated()));
     }
 
     public function destroy($id)
     {
-        return $this->result(CharacterResource::class, $this->characterService->destroy($id));
+        return $this->result($this->characterService->destroy($id));
     }
 
     public function storeImage($id, ImageRequest $request)
     {
-        return $this->result(CharacterResource::class, $this->characterService->storeImage($id, $request));
+        return $this->result($this->characterService->storeImage($id, $request));
     }
 
     public function destroyImage($id)
     {
-        return $this->result(CharacterResource::class, $this->characterService->destroyImage($id));
+        return $this->result($this->characterService->destroyImage($id));
     }
 }
 
