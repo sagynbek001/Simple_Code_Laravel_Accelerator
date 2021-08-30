@@ -19,7 +19,7 @@ class AuthService extends BaseService{
     public function register(array $data): ServiceResult
     {
         $model = $this->repoUser->register($data);
-        return $this->ok('Пользователь зарегистрировн');
+        return $this->ok('Пользователь зарегистрирован');
     }
 
     public function login(array $data): ServiceResult
@@ -38,8 +38,12 @@ class AuthService extends BaseService{
         $token = $model->createToken($data['device_name'])->plainTextToken;
 
         $tokenArr = array("token" => $token);
-        return $this->result(array($tokenArr, $model));
-        return $this->result(array_merge($model->toArray(), ['token' => $token]));
+
+        return $this->result([
+            'token' => $token,
+            'userId' => $model->id,
+            'userName' => $model->name,
+        ]);
     }
 
     public function get_profile(array $data): ServiceResult
