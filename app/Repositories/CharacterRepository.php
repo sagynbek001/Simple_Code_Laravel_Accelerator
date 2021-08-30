@@ -48,7 +48,35 @@ class CharacterRepository
 
     public function getEpisodes($model, $params)
     {
-        $query = $model->episodes();
+        $query = $model->episodes()->with(['Image']);
+
+        if (isset($params['season']))
+            $query->whereIn('season', $params['season']);
+
+        if (isset($params['series']))
+            $query->whereIn('series', $params['series']);
+
+        if (isset($params['premiere_from']))
+            $query->where('premiere', '>=', $params['premiere_from']);
+
+        if (isset($params['premiere_to']))
+            $query->where('premiere', '<=', $params['premiere_to']);
+
+        if (isset($params['search'])){
+            $query->where(function ($subQuery) use ($params) {
+                $subQuery->where('name', 'LIKE', '%' . $params['search'] . '%')
+                    ->orWhere('description', 'LIKE', '%' . $params['search'] . '%');
+            });
+        }
+
+        if (isset($params['sort'])){
+            if (isset($params['order'])){
+                $query->orderBy($params['sort'], $params['order']);
+            } else {
+                $query->orderBy($params['sort'], 'asc');
+            }
+        }
+
         if (isset($params['per_page'])) {
             return $query->paginate($params['per_page']);
         } else {
