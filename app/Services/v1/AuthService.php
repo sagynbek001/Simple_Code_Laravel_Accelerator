@@ -49,7 +49,7 @@ class AuthService extends BaseService{
     public function logout($phone): ServiceResult
     {
         $user = $this->repoUser->get($phone);
-        $user->tokens()->delete();
+        $user->currentAccessToken()->delete();
         return $this->ok('Пользователь разлогинен');
     }
 }

@@ -29,17 +29,18 @@ Route::group(['prefix' => 'v1',], function () {
         Route::post('/login', [AuthController::class, 'login'])->name('login');
     });
 
-    Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'users'], function () {
-        //done
-        Route::get('/myprofile', [AuthController::class, 'get_profile']);//->middleware('auth:sanctum');
-        Route::post('/logout', [AuthController::class, 'logout']);//->middleware('auth:sanctum');
-    });//
+    //protected routes
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::group(['prefix' => 'users'], function () {
+            //done
+            Route::get('/myprofile', [AuthController::class, 'get_profile']);
+            Route::post('/logout', [AuthController::class, 'logout']);
+        });
 
-    Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'characters'], function () {
+        Route::group(['prefix' => 'characters'], function () {
             //done
             Route::get('/', [CharacterController::class, 'index']);
             Route::get('/{id}', [CharacterController::class, 'get'])->where(['id' => '[0-9]+']);
-            //pagination, sort needed
             Route::get('/{id}/episodes', [CharacterController::class, 'getEpisodes'])->where(['id' => '[0-9]+']);
             Route::post('/', [CharacterController::class, 'store']);
             Route::put('/{id}', [CharacterController::class, 'update'])->where(['id' => '[0-9]+']);
@@ -68,7 +69,6 @@ Route::group(['prefix' => 'v1',], function () {
             //done
             Route::get('/', [EpisodeController::class, 'index']);
             Route::get('/{id}', [EpisodeController::class, 'get'])->where(['id' => '[0-9]+']);
-            //pagination, sort needed
             Route::get('/{id}/characters', [EpisodeController::class, 'getCharacters'])->where(['id' => '[0-9]+']);
             Route::post('/', [EpisodeController::class, 'store']);
             Route::put('/{id}', [EpisodeController::class, 'update'])->where(['id' => '[0-9]+']);
@@ -78,5 +78,6 @@ Route::group(['prefix' => 'v1',], function () {
             Route::post('/{episode_id}/characters', [EpisodeController::class, 'attachCharacter'])->where(['id' => '[0-9]+']);
             Route::delete('/{episode_id}/characters/{character_id}', [EpisodeController::class, 'dettachCharacter'])->where(['id' => '[0-9]+']);
         });
+    });
 });
 
