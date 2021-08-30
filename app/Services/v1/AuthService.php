@@ -46,17 +46,10 @@ class AuthService extends BaseService{
         ]);
     }
 
-    public function get_profile(array $data): ServiceResult
-    {
-        $model = $this->repoUser->register($data);
-        return $this->ok('Пользователь зарегистрировн');
-    }
-
     public function logout($phone): ServiceResult
     {
         $user = $this->repoUser->get($phone);
         $user->tokens()->delete();
         return $this->ok('Пользователь разлогинен');
     }
-
 }

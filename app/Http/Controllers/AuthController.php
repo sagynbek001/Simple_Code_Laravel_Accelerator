@@ -22,9 +22,9 @@ class AuthController extends Controller
         return  $this->result($this->authService->register($request->all()));
     }
 
-    public function get_profile(Request $request)
+    public function getProfile(Request $request)
     {
-        return new ProfileResource($request->user());
+        return new ProfileResource($this->userService->getProfile($request));
     }
 
     public function login(LoginRequest $request)
