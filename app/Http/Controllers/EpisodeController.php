@@ -10,6 +10,7 @@ use App\Http\Requests\ImageRequest;
 use App\Http\Resources\CharacterCollection;
 use App\Http\Resources\EpisodeCollection;
 use App\Http\Resources\EpisodeResource;
+use GrahamCampbell\ResultType\Result;
 
 class EpisodeController extends Controller
 {
@@ -59,6 +60,16 @@ class EpisodeController extends Controller
     public function destroyImage($id)
     {
         return $this->result($this->episodeService->destroyImage($id));
+    }
+
+    public function attachCharacter($episode_id, Request $request)
+    {
+        return $this->result($this->episodeService->attachCharacter($episode_id, $request['character_id']));
+    }
+
+    public function dettachCharacter($episode_id, $character_id)
+    {
+        return $this->result($this->episodeService->dettachCharacter($episode_id, $character_id));
     }
 }
 

@@ -89,4 +89,19 @@ class EpisodeRepository
     {
         return Episode::where('name', '=', $name)->where('id', '!=', $id)->exists();
     }
+
+    public function attachCharacter(Episode $episode, $character_id)
+    {
+        $episode->characters()->attach($character_id);
+    }
+
+    public function dettachCharacter(Episode $episode, $character_id)
+    {
+        $episode->characters()->detach($character_id);
+    }
+
+    public function existsCharacter(Episode $episode, $character_id): bool
+    {
+        return $episode->characters()->contains($character_id);
+    }
 }

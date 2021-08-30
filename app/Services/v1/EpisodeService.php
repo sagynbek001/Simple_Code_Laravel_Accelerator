@@ -83,4 +83,33 @@ class EpisodeService extends BaseService
         $this->repoEpisode->destroyImage($id);
         return $this->ok('Картинка удалена');
     }
+
+    public function attachCharacter($episode_id, $character_id): ServiceResult
+    {
+        $episode = $this->repoEpisode->get($episode_id);
+        if (is_null($episode)){
+            return $this->errNotFound('Эпизод не найден');
+        }
+
+        if ($this->repoEpisode->existsCharacter($episode, $character_id)){
+            return $this->errValidate('Этот персонаж уже есть в этом эпизоде');
+        }
+
+        $this->repoEpisode->attachCharacter($episode, $character_id);
+        return $this->ok('Персонаж добавлен к эпизоду');
+    }
+
+    public function dettachCharacter($episode_id, $character_id): ServiceResult
+    {
+        $episode = $this->repoEpisode->get($episode_id);
+        if (is_null($episode)){
+            return $this->errNotFound('Эпизод не найден');
+        }
+        if (!$this->repoEpisode->existsCharacter($episode, $character_id)){
+            return $this->errValidate('Этого персонажа нет в этом эпизоде');
+        }
+
+        $this->repoEpisode->dettachCharacter($episode, $character_id);
+        return $this->ok('Персонаж удален из эпизода');
+    }
 }
